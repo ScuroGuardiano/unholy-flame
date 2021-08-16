@@ -1,18 +1,25 @@
-<nb-layout *ngIf="auth.user | async as user; else showLogin">
-  <ng-template [ngIf]="userLoaded">
+<ng-template [ngIf]="userLoaded">
+  <nb-layout *ngIf="auth.user | async as user; else showLogin">
     <nb-layout-header fixed>
       <h1>Unholy Flame Alpha</h1>
     </nb-layout-header>
+
+    <nb-sidebar>
+      <app-navigation></app-navigation>
+    </nb-sidebar>
 
     <nb-layout-column>
       <router-outlet></router-outlet>
     </nb-layout-column>
 
     <nb-layout-footer fixed>
-    <p>Made by <a href="https://github.com/ScuroGuardiano">ScuroGuardiano</a></p>
+      <div class="foota">
+        Copyright &copy; 2021&nbsp;<a href="https://github.com/ScuroGuardiano">ScuroGuardiano</a><br>
+        License MIT
+      </div>
     </nb-layout-footer>
-  </ng-template>
-</nb-layout>
+  </nb-layout>
+</ng-template>
 
 <ng-template #showLogin>
   <app-login *ngIf="userLoaded"></app-login>
