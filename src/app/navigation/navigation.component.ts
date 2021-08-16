@@ -37,6 +37,11 @@ export class NavigationComponent implements OnInit {
       link: "/tags"
     },
     {
+      icon: "image-outline",
+      title: "Media",
+      link: "/media"
+    },
+    {
       icon: "lock-outline",
       title: "Privacy policy",
       link: "/privacy"
