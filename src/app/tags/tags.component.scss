@@ -1,0 +1,11 @@
+.add-tag {
+  display: flex;
+  button {
+    margin-left: 0.5rem;
+    width: 80px;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}

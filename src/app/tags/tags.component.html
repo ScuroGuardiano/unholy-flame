@@ -1,0 +1,21 @@
+<nb-card>
+  <nb-card-header>
+    Add tag
+  </nb-card-header>
+  <nb-card-body class="add-tag">
+    <nb-form-field>
+      <nb-icon nbPrefix icon="hash-outline" pack="eva"></nb-icon>
+      <input nbInput status="primary" name="tag-name" placeholder="Tag name" [(ngModel)]="addingTagName">
+    </nb-form-field>
+    <button status="primary" [disabled]="addingTagName === ''" nbButton><nb-icon icon="plus-outline" pack="eva"></nb-icon></button>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    Tag list
+  </nb-card-header>
+  <nb-card-body>
+    <h2>Tu będą tagi jak mi się uda ogarnąć libkę</h2>
+  </nb-card-body>
+</nb-card>

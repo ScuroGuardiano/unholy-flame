@@ -13,12 +13,16 @@ import { NbThemeModule, NbLayoutModule, NbCardModule, NbInputModule, NbButtonMod
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FormsModule } from '@angular/forms';
 import { NavigationComponent } from './navigation/navigation.component';
+import { LogoutComponent } from './logout/logout.component';
+import { TagsComponent } from './tags/tags.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NavigationComponent
+    NavigationComponent,
+    LogoutComponent,
+    TagsComponent
   ],
   imports: [
     BrowserModule,
