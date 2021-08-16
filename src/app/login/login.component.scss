@@ -1,0 +1,33 @@
+nb-layout-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  width: 400px;
+
+  nb-form-field {
+    margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .submit {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    input:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  .error {
+    padding-top: 0;
+    margin-top: 0;
+    color: #ff3d71;
+    font-weight: bold;
+  }
+}

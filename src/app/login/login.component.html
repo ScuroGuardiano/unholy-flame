@@ -1,0 +1,33 @@
+<nb-layout>
+  <nb-layout-column>
+    <nb-card class="login-card" [status]="cardStatus">
+      <nb-card-header>
+        Login
+      </nb-card-header>
+      <nb-card-body>
+        <p class="error" *ngIf="error !== ''">{{error}}</p>
+        <form>
+          <nb-form-field>
+            <nb-icon nbPrefix icon="at-outline" pack="eva"></nb-icon>
+            <input nbInput fullWidth [status]="emailStatus"
+              type=email required placeholder="email" name="email"
+              [(ngModel)]="email" email #emailCtr="ngModel" />
+          </nb-form-field>
+
+          <nb-form-field>
+            <nb-icon nbPrefix icon="lock-outline" pack="eva"></nb-icon>
+            <input nbInput fullWidth [status]="passwordStatus"
+              type=password required placeholder="password" name="password"
+              [(ngModel)]="password" />
+          </nb-form-field>
+
+          <div class="submit">
+            <input nbButton [status]="submitStatus"
+              [disabled]="!canSignIn" type="submit" value="Sign in"
+              (click)="signIn()"/>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>
