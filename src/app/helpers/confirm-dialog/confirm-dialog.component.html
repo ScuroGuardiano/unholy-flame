@@ -1,0 +1,14 @@
+<nb-card>
+<nb-card-header>
+  {{ header }}
+</nb-card-header>
+<nb-card-body>
+  <p>{{ text }}</p>
+</nb-card-body>
+<nb-card-footer>
+  <div>
+    <button nbButton [status]="confirmStatus" (click)="confirm()">{{ confirmCaption }}</button>
+    <button autofocus nbButton [status]="abortStatus" (click)="abort()">{{ abortCaption }}</button>
+  </div>
+</nb-card-footer>
+</nb-card>

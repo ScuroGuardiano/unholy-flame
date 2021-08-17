@@ -1,0 +1,22 @@
+nb-card {
+  max-width: 600px;
+  animation: intro .2s;
+}
+button:first-child {
+  margin-right: 1rem;
+}
+p {
+  text-align: center;
+}
+div {
+  text-align: center;
+}
+
+@keyframes intro {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

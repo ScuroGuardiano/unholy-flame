@@ -5,9 +5,9 @@
   <nb-card-body class="add-tag">
     <nb-form-field>
       <nb-icon nbPrefix icon="hash-outline" pack="eva"></nb-icon>
-      <input nbInput status="primary" name="tag-name" placeholder="Tag name" [(ngModel)]="addingTagName">
+      <input nbInput status="primary" name="tag-name" placeholder="Tag name" (keyup)="addTagKeyupHandler($event)" [(ngModel)]="addingTagName">
     </nb-form-field>
-    <button status="primary" [disabled]="addingTagName === ''" nbButton><nb-icon icon="plus-outline" pack="eva"></nb-icon></button>
+    <button status="primary" (click)="addTag()" [disabled]="addingTagName === ''" nbButton><nb-icon icon="plus-outline" pack="eva"></nb-icon></button>
   </nb-card-body>
 </nb-card>
 
@@ -16,6 +16,6 @@
     Tag list
   </nb-card-header>
   <nb-card-body>
-    <h2>Tu będą tagi jak mi się uda ogarnąć libkę</h2>
+    <app-table [deletable]="true" [columns]="tags.columns" [rows]="tags.rows" (delete)="deleteTag($event)"></app-table>
   </nb-card-body>
 </nb-card>
