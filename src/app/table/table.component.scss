@@ -1,0 +1,103 @@
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+ngx-datatable.app-table {
+  border: solid 3px #2e3a59;
+  border-radius: .5rem;
+  box-sizing: border-box;
+
+  .resize-handle {
+    border-right: solid 3px #192038;
+  }
+
+  .datatable-header {
+    background-color: #2e3a59;
+    display: flex;
+    align-items: center;
+  }
+
+  datatable-header-cell {
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    border-right: solid 2px #192038;
+
+    .datatable-header-cell-label {
+      padding: .2rem .5rem;
+      display: inline-block;
+      font-weight: bolder;
+    }
+
+    .sort-btn {
+      margin-left: -.2rem;
+      margin-top: .1rem;
+    }
+  }
+  .empty-row {
+    padding-top: .7rem;
+    padding-bottom: .7rem;
+    padding-left: .5rem;
+  }
+  datatable-row-wrapper {
+    button {
+      margin-left: 0.5rem;
+    }
+    datatable-body-row {
+      padding-top: .7rem;
+      padding-bottom: .7rem;
+
+      datatable-body-cell {
+        display: flex !important;
+        align-items: center;
+      }
+
+      .datatable-body-cell-label {
+        padding-left: .5rem;
+      }
+    }
+    &:nth-child(even) {
+      datatable-body-row {
+        background-color: #192038;
+      }
+    }
+  }
+  datatable-footer {
+    background-color: #2e3a59;
+    .page-count {
+      padding-left: .5rem;
+    }
+
+    datatable-pager {
+      li {
+        //border: solid 3px #222b45;
+        margin-right: 2px !important;
+        border-radius: .3rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: #2e3a59;
+        display: inline-block;
+        &:not(.disabled):hover, &.active {
+          background-color: #222b45;
+        }
+        &.disabled {
+          a {
+            color: #8f9bb3;
+          }
+        }
+        a {
+          text-decoration: none;
+          color: #edf1f7;
+          display: inline-flex !important;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+        }
+        i {
+          position: relative;
+          top: 0.1rem;
+        }
+      }
+    }
+  }
+}

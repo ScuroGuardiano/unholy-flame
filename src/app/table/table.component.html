@@ -1,0 +1,23 @@
+<ngx-datatable
+  [headerHeight]="50"
+  [columnMode]="ColumnMode.force"
+  [footerHeight]="50"
+  [limit]="perPage"
+  [rowHeight]="'auto'"
+  [rows]="rows"
+  class="app-table"
+  [scrollbarH]="true"
+>
+  <ngx-datatable-column *ngFor="let column of columnsKeys()" [prop]="column" [name]="columns[column] ?? column" [sortable]="true">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+      {{ value }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column [maxWidth]="120" [canAutoResize]="false" [resizeable]="false"  [sortable]="false">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+      <button [disabled]="!deletable" nbButton status="danger" (click)="_delete(row, rowIndex)"><nb-icon icon="trash-2-outline"></nb-icon></button>
+      <button [disabled]="!editable" nbButton status="success"><nb-icon icon="edit-outline"></nb-icon></button>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
