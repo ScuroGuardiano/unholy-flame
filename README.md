@@ -1,27 +1,30 @@
-# UnholyFlame
+# Unholy Flame - work in progress
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
+This is my **work in progress** CMS-like something for Firebase.  
+Basically it's a blog management.  
+The concept is to use only Spark plan without any Cloud Functions or something like that.  
 
-## Development server
+## Created with ❤ using Angular and
+* [Nebular](https://akveo.github.io/nebular/) for UI
+* [ngx-datatable](https://swimlane.github.io/ngx-datatable/) for tables
+* [AngularFire](https://github.com/angular/angularfire) for Angular Firebase services
+* [slugify](https://github.com/simov/slugify) to generate nice slugs from titles
+* [sass](https://sass-lang.com/) for styling
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### How to run this
+1. Paste your firebase config into `src/environments/environment.ts`
+2. Copy rules from `firebase/security.rules` and paste it into your firestore rules
+3. Create user with email on firebase console
+4. In Firestore create collection `admins` and document in it:
+    ```json
+    "<USER UID>": {
+      "enabled": true
+    }
+    ```
+5. `npm install` and `npm start`
 
-## Code scaffolding
+### Cool screen from Alpha
+![really cool screen](screens/screen1.png)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# LICENSE
+MIT
