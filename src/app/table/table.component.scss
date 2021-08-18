@@ -38,10 +38,12 @@ ngx-datatable.app-table {
     padding-left: .5rem;
   }
   datatable-row-wrapper {
+    cursor: crosshair;
     button {
       margin-left: 0.5rem;
     }
     datatable-body-row {
+      transition: background-color .2s ease-in-out;
       padding-top: .7rem;
       padding-bottom: .7rem;
 
@@ -57,6 +59,12 @@ ngx-datatable.app-table {
     &:nth-child(even) {
       datatable-body-row {
         background-color: #192038;
+      }
+    }
+
+    &:hover {
+      datatable-body-row {
+        background-color: 	#2e3a59;
       }
     }
   }
