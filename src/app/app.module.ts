@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbCardModule, NbInputModule, NbButtonModule, NbFormFieldModule, NbIconModule, NbSidebarModule, NbMenuModule, NbToastrModule, NbDialogModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbCardModule, NbInputModule, NbButtonModule, NbFormFieldModule, NbIconModule, NbSidebarModule, NbMenuModule, NbToastrModule, NbDialogModule, NbSpinnerModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FormsModule } from '@angular/forms';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -18,6 +18,7 @@ import { TagsComponent } from './tags/tags.component';
 import { TableComponent } from './table/table.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ConfirmDialogComponent } from './helpers/confirm-dialog/confirm-dialog.component';
+import { ConfirmWaitingDialogComponent } from './helpers/confirm-waiting-dialog/confirm-waiting-dialog.component';
 
 const Nebula = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -31,7 +32,8 @@ const Nebula = [
   NbSidebarModule.forRoot(),
   NbMenuModule.forRoot(),
   NbToastrModule.forRoot(),
-  NbDialogModule.forRoot()
+  NbDialogModule.forRoot(),
+  NbSpinnerModule
 ]
 
 @NgModule({
@@ -42,7 +44,8 @@ const Nebula = [
     LogoutComponent,
     TagsComponent,
     TableComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ConfirmWaitingDialogComponent
   ],
   imports: [
     BrowserModule,

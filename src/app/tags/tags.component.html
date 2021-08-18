@@ -5,13 +5,29 @@
   <nb-card-body class="add-tag">
     <nb-form-field>
       <nb-icon nbPrefix icon="hash-outline" pack="eva"></nb-icon>
-      <input nbInput status="primary" name="tag-name" placeholder="Tag name" (keyup)="addTagKeyupHandler($event)" [(ngModel)]="addingTagName">
+      <input
+        #addTagInput
+        nbInput
+        status="primary"
+        name="tag-name"
+        placeholder="Tag name"
+        (keyup)="addTagKeyupHandler($event)"
+        [(ngModel)]="addingTagName"
+        [disabled]="addingInProgress">
     </nb-form-field>
-    <button status="primary" (click)="addTag()" [disabled]="addingTagName === ''" nbButton><nb-icon icon="plus-outline" pack="eva"></nb-icon></button>
+    <button
+      nbButton
+      status="primary"
+      (click)="addTag()"
+      [disabled]="addingTagName === '' || addingInProgress"
+      [nbSpinner]="addingInProgress"
+      nbSpinnerStatus="info">
+      <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+    </button>
   </nb-card-body>
 </nb-card>
 
-<nb-card>
+<nb-card [nbSpinner]="loadingTags" nbSpinnerStatus="info" nbSpinnerSize="giant">
   <nb-card-header>
     Tag list
   </nb-card-header>
