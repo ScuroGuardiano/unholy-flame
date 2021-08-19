@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.userLoaded = true;
         this.user = user;
       }, 0);
-    })
+    });
   }
 
   ngOnDestroy() {
