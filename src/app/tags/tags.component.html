@@ -30,8 +30,14 @@
 <nb-card [nbSpinner]="loadingTags" nbSpinnerStatus="info" nbSpinnerSize="giant">
   <nb-card-header>
     Tag list
+    <button class="refresh-button" nbButton outline status="primary" size="small"
+      [nbSpinner]="loadingTags" npSpinnerStatus="info" nbSpinnerSize="tiny"
+      nbTooltip="Refresh local cache by forcing data reload from firestore." nbTooltipStatus="info" nbTooltipIcon="info-outline" nbTooltipClass="tooltip"
+      (click)="readTags(true)">
+      <nb-icon icon="refresh-outline"></nb-icon>
+    </button>
   </nb-card-header>
   <nb-card-body>
-    <app-table [deletable]="true" [columns]="tags.columns" [rows]="tags.rows" (delete)="deleteTag($event)"></app-table>
+    <app-table [deletable]="true" [columns]="tags.columns" [rows]="tags.rows" (delete)="deleteTag($event)" [selectable]="true"></app-table>
   </nb-card-body>
 </nb-card>

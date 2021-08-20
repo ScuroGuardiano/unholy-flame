@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import IColumns from '../table/interfaces/columns';
 import IRow from '../table/interfaces/row';
-import { NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+import { NbGlobalPhysicalPosition, NbToastrService, NbTrigger } from '@nebular/theme';
 import ITableDeleteEvent from '../table/interfaces/delete-event';
 import { TagService } from '../services/tag.service';
 import TagAlreadyExistsError from '../errors/tag-already-exists-error';
@@ -25,14 +25,17 @@ export class TagsComponent implements OnInit {
   loadingTags = false;
   deletingInProgress = false;
 
+  NbTrigger = NbTrigger;
+
   tags: { columns: IColumns, rows: IRow[] } = {
     columns: {
-      id: "ID",
       name: "Display name",
       slug: "Slug"
     },
     rows: []
   }
+
+  @ViewChild("addTagInput") addTagInputRef: ElementRef<HTMLInputElement> | undefined;
 
   addTagKeyupHandler(e: KeyboardEvent) {
     if (e.key === "Enter" && this.addingTagName != '') {
@@ -56,9 +59,9 @@ export class TagsComponent implements OnInit {
         console.error(err);
         this.toastr("danger", "Error", `${err.code ?? 'unknown'}. Check console for full error`);
       }
-      finally {
-        this.addingInProgress = false;
-      }
+
+      this.addingInProgress = false;
+      setTimeout(() => this.addTagInputRef?.nativeElement.focus(), 0);
   }
 
   async deleteTag(deleteEvent: ITableDeleteEvent) {
@@ -92,18 +95,18 @@ export class TagsComponent implements OnInit {
     }, { autoFocus: false });
   }
 
-  readTags(limit = 10, offset = 0) {
+  async readTags(forceReloadFromDatabase = false) {
     this.loadingTags = true;
-    this.tagService.getTags(limit, offset)
-      .subscribe(
-        tags => {
-          this.tags.rows = tags;
-        },
-        err => {
-          console.log(err);
-          this.toastr("danger", "Error", `${err.code ?? 'unknown error'} while reading tags. Check console for full error`);
-        },
-        () => this.loadingTags = false);
+
+    try {
+      this.tags.rows = await this.tagService.getTags(forceReloadFromDatabase);
+    }
+    catch (err) {
+      console.error(err);
+      this.toastr("danger", "Error", `${err.code ?? 'unknown error'} while reading tags. Check console for full error`);
+    }
+
+    this.loadingTags = false;
   }
 
   ngOnInit(): void {
@@ -111,6 +114,6 @@ export class TagsComponent implements OnInit {
   }
 
   private toastr(status: string, title: string, message: string) {
-    this.toastrService.show(message, title, { status, position: NbGlobalPhysicalPosition.TOP_LEFT, duration: 6000 })
+    this.toastrService.show(message, title, { status, position: NbGlobalPhysicalPosition.TOP_RIGHT, duration: 6000 })
   }
 }

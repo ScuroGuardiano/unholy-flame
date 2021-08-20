@@ -10,3 +10,9 @@
 button:disabled {
   cursor: not-allowed !important;
 }
+.tooltip {
+  nb-icon {
+    width: 2em !important;
+    height: 2em !important;
+  }
+}
