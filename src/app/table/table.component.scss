@@ -1,5 +1,10 @@
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 
+
+nb-checkbox label {
+  cursor: pointer;
+  padding-top: .35rem !important;
+}
 ngx-datatable.app-table {
   border: solid 3px #2e3a59;
   border-radius: .5rem;
@@ -27,6 +32,11 @@ ngx-datatable.app-table {
       font-weight: bolder;
     }
 
+    .allRowsSelect {
+      padding-left: .5rem;
+      padding-top: .3rem;
+    }
+
     .sort-btn {
       margin-left: -.2rem;
       margin-top: .1rem;
@@ -38,7 +48,6 @@ ngx-datatable.app-table {
     padding-left: .5rem;
   }
   datatable-row-wrapper {
-    cursor: crosshair;
     button {
       margin-left: 0.5rem;
     }
