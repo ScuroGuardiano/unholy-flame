@@ -9,7 +9,8 @@ slugify.extend({
   '+': 'p',
   '&': 'amp',
   '?': 'q',
-  '%': 'percent'
+  '%': 'percent',
+  '-': 'minus'
 });
 
 if (environment.production) {
