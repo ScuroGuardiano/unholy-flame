@@ -38,6 +38,20 @@
     </button>
   </nb-card-header>
   <nb-card-body>
-    <app-table [deletable]="true" [columns]="tags.columns" [rows]="tags.rows" (delete)="deleteTag($event)" [selectable]="true"></app-table>
+    <app-table
+      [deletable]="true"
+      [columns]="tags.columns"
+      [rows]="tags.rows"
+      (delete)="deleteTag($event)"
+      [selectable]="true"
+      [(selected)]="tags.selected">
+    </app-table>
+    <button
+      class="delete-selected-btn"
+      status="danger"
+      nbButton [disabled]="tags.selected.length === 0"
+      (click)="deleteSelected()">
+        DELETE SELECTED
+      </button>
   </nb-card-body>
 </nb-card>

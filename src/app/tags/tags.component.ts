@@ -27,12 +27,13 @@ export class TagsComponent implements OnInit {
 
   NbTrigger = NbTrigger;
 
-  tags: { columns: IColumns, rows: IRow[] } = {
+  tags: { columns: IColumns, rows: IRow[], selected: IRow[] } = {
     columns: {
       name: "Display name",
       slug: "Slug"
     },
-    rows: []
+    rows: [],
+    selected: []
   }
 
   @ViewChild("addTagInput") addTagInputRef: ElementRef<HTMLInputElement> | undefined;
@@ -88,6 +89,43 @@ export class TagsComponent implements OnInit {
     return this.dialogService.open({
       header: `Deleting tag ${tagName}`,
       text: `Are you sure you want to delete tag ${tagName}? This is irreversible! Posts that are using this tag will have dead reference to it.`,
+      confirmStatus: "danger",
+      confirmCaption: "Yes, delete",
+      abortStatus: "info",
+      abortCaption: "No, don't delete"
+    }, { autoFocus: false });
+  }
+
+  async deleteSelected() {
+    const _delete = async () => {
+      try {
+        const slugs = this.tags.selected.map<string>(selectedRow => selectedRow.slug);
+        const deleted = await this.tagService.deleteTags(slugs);
+        this.toastr("success", "Success!", `Deleted ${deleted} tag${deleted > 1 ? 's' : ''}!`);
+        this.readTags();
+        this.tags.selected = [];
+      } catch (err) {
+        this.toastr("danger", "Error", `${err.code ?? 'unknown'}. Check console for full error`);
+        console.error(err);
+      }
+    }
+
+    const dialogRef = this.confirmDeletingSelected();
+    dialogRef.onConfirmed = async () => {
+      dialogRef.startWaiting();
+      await _delete();
+      dialogRef.finishWaiting();
+    }
+  }
+
+  confirmDeletingSelected() {
+    const tagsNoun = `tag${this.tags.selected.length > 1 ? 's' : ''}`;
+    const thisThese = tagsNoun === 'tag' ? 'this' : 'these';
+    const tagsAmount = this.tags.selected.length;
+
+    return this.dialogService.open({
+      header: `Deleting ${tagsAmount} ${tagsNoun}`,
+      text: `Are you sure you want to delete ${tagsAmount} ${tagsNoun}? This is irreversible! Posts that are using ${thisThese} ${tagsNoun} will have dead reference to it.`,
       confirmStatus: "danger",
       confirmCaption: "Yes, delete",
       abortStatus: "info",
