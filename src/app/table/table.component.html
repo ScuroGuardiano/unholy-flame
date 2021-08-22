@@ -1,12 +1,13 @@
 <ngx-datatable
+  #tabel
   [headerHeight]="50"
-  [columnMode]="ColumnMode.force"
+  [columnMode]="ColumnMode.standard"
   [footerHeight]="50"
   [limit]="perPage"
   [rowHeight]="'auto'"
   [rows]="rows"
-  class="app-table"
   [scrollbarH]="true"
+  class="app-table"
   [selectionType]="selectable ? SelectionType.checkbox : $any(null)"
   [selected]="selected"
   (select)="onSelect($event)"
@@ -45,7 +46,7 @@
     </ng-template>
   </ngx-datatable-column>
 
-  <ngx-datatable-column [maxWidth]="120" [width]="120" [canAutoResize]="false" [resizeable]="false" [sortable]="false" [draggable]="false">
+  <ngx-datatable-column [width]="120" [canAutoResize]="false" [resizeable]="false" [sortable]="false" [draggable]="false">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       <button [disabled]="!deletable" nbButton status="danger" (click)="_delete(row, rowIndex)"><nb-icon icon="trash-2-outline"></nb-icon></button>
       <button [disabled]="!editable" nbButton status="success"><nb-icon icon="edit-outline"></nb-icon></button>
