@@ -111,8 +111,10 @@ export class TableComponent implements OnInit {
 
       this.table!.columns = columns;
       this.table!.recalculate();
-        //@ts-ignore
-        this.table!.element.style = "visibility: visible;"
+
+      // I added another setTimeout here coz there was still jump from resizing ;-;
+      //@ts-ignore
+      setTimeout(() => this.table!.element.style = "visibility: visible;", 0);
     }, 0);
   }
 }
