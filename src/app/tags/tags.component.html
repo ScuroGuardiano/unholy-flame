@@ -11,7 +11,7 @@
         status="primary"
         name="tag-name"
         placeholder="Tag name"
-        (keyup)="addTagKeyupHandler($event)"
+        (keyup.enter)="addTagEnterKeyupHandler()"
         [(ngModel)]="addingTagName"
         [disabled]="addingInProgress">
     </nb-form-field>

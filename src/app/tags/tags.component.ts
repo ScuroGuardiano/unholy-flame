@@ -38,10 +38,8 @@ export class TagsComponent implements OnInit {
 
   @ViewChild("addTagInput") addTagInputRef: ElementRef<HTMLInputElement> | undefined;
 
-  addTagKeyupHandler(e: KeyboardEvent) {
-    if (e.key === "Enter" && this.addingTagName != '') {
-      this.addTag();
-    }
+  addTagEnterKeyupHandler() {
+    this.addingTagName != '' && this.addTag();
   }
 
   async addTag() {
