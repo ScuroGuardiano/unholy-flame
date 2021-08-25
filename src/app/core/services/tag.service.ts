@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import slugify from 'slugify';
 import TagAlreadyExistsError from '../errors/tag-already-exists-error';
-import ITag from '../tags/tag';
+import ITag from '../components/tags/tag';
 
 export interface ITagsDoc {
   tags: ITag[];
