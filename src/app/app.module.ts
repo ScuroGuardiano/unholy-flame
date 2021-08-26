@@ -19,6 +19,8 @@ import { TableComponent } from './helpers/table/table.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ConfirmDialogComponent } from './helpers/confirm-dialog/confirm-dialog.component';
 import { ConfirmWaitingDialogComponent } from './helpers/confirm-waiting-dialog/confirm-waiting-dialog.component';
+import { IsHoveredDirective } from './directives/is-hovered.directive';
+import { ResizeObserverDirective } from './directives/resize-observer.directive';
 
 const Nebula = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -47,7 +49,9 @@ const Nebula = [
     TagsComponent,
     TableComponent,
     ConfirmDialogComponent,
-    ConfirmWaitingDialogComponent
+    ConfirmWaitingDialogComponent,
+    IsHoveredDirective,
+    ResizeObserverDirective,
   ],
   imports: [
     BrowserModule,

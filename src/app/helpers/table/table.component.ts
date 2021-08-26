@@ -49,6 +49,12 @@ export class TableComponent implements OnInit {
   // Don't you fucking delete that
   @HostListener('window:resize', ['$event'])
   onWindowResize() {
+    // Okey, you may wonder why I am using here full fix for sizing instead of using resize algorithm
+    // in "OnElementResize" method. The thing is ngx-datatables has it's own listener on window.resize event
+    // and what is does it recalculates values... Which means I can't take old table width so I can't check
+    // if content was overflowing or not. I will maybe make some workaround for that
+    // (I can for example listen to column resize event from ngx-datatables and update there whenever content overflows or not)
+    // But for now I am fckn done with fixing ngx-datatables sizing calculations to make it perfect.
     this.nxgDatatablesSizeFix();
   }
 
@@ -116,5 +122,47 @@ export class TableComponent implements OnInit {
       //@ts-ignore
       setTimeout(() => this.table!.element.style = "visibility: visible;", 0);
     }, 0);
+  }
+
+  lastWidth = 0;
+  onElementResize(entry: ResizeObserverEntry) {
+    if (this.lastWidth === entry.borderBoxSize[0].inlineSize) {
+      return;
+    }
+
+    const newInnerWidth = entry.borderBoxSize[0].inlineSize;
+    const oldInnerWidth = this.table!._innerWidth; // Before I call recalcuate here is old table width.
+
+    // Okey, if content is already overflowing that means user resized columns
+    // In that case I won't even bother resizing columns, it could piss off user
+    // I mean it would piss me off if I was an user. And I will be an user, so yea.
+    if (!this.isContentOverflowing(oldInnerWidth)) {
+      this.algorithmForResizingColumns(newInnerWidth);
+    }
+
+    this.table!.recalculate();
+    this.lastWidth = newInnerWidth;
+  }
+
+  private isContentOverflowing(widthToChangeAgainst: number) {
+    const columns = this.table!._internalColumns;
+    const columnsWidth = columns.reduce((prev, curr) => prev + curr.width!, 0);
+    return columnsWidth > widthToChangeAgainst;
+  }
+
+  private algorithmForResizingColumns(newInnerWidth: number) {
+    const fixedColumnsWidth = this.table?._internalColumns.reduce((prev, curr) => {
+      return prev + (curr.prop ? 0 : (curr.width ?? 0));
+    }, 0);
+    const spaceForContentColumns = newInnerWidth! - fixedColumnsWidth!;
+    const contentColumns = this.table?._internalColumns.filter(column => column.prop !== undefined);
+    const contentColumnWidth = spaceForContentColumns / contentColumns!.length;
+    const columns = this.table!._internalColumns.map(internalColumn => {
+      if (internalColumn.prop) {
+        return { ...internalColumn, width: contentColumnWidth };
+      }
+      return { ...internalColumn };
+    });
+    this.table!.columns = columns;
   }
 }

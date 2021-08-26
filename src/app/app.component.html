@@ -4,7 +4,12 @@
       <h1>Unholy Flame Alpha</h1>
     </nb-layout-header>
 
-    <nb-sidebar>
+    <!-- Unfortunately I can't put sidebar into seperate component, it needs to be direct child of nb-layout to work -->
+    <nb-sidebar
+      appIsHovered
+      (hoverChange)="onSidebarHover($event)"
+      class="app-sidebar"
+      [state]="sidebarState">
       <app-navigation></app-navigation>
     </nb-sidebar>
 
@@ -13,7 +18,7 @@
     </nb-layout-column>
 
     <nb-layout-footer fixed>
-      <div class="foota">
+      <div class="app-foota">
         Copyright &copy; 2021&nbsp;<a href="https://github.com/ScuroGuardiano">ScuroGuardiano</a><br>
         License MIT
       </div>

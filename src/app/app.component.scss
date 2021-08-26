@@ -1,3 +1,42 @@
-.foota {
+.app-foota {
   text-align: center;
+}
+.app-sidebar {
+  transition: width .3s;
+  &>div {
+    transition: width .3s;
+  }
+  &.expanded {
+    ul {
+      animation: menuInOut .5s;
+    }
+  }
+  &.compacted {
+    ul {
+      animation: menuInOut2 .5s;
+    }
+  }
+}
+
+@keyframes menuInOut {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes menuInOut2 {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

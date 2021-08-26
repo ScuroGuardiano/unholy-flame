@@ -1,4 +1,7 @@
 <ngx-datatable
+  appResizeObserver
+  (appResize)="onElementResize($event)"
+  [debounce]="50"
   #tabel
   [headerHeight]="50"
   [columnMode]="ColumnMode.standard"
