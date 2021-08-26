@@ -126,11 +126,16 @@ export class TableComponent implements OnInit {
 
   lastWidth = 0;
   onElementResize(entry: ResizeObserverEntry) {
-    if (this.lastWidth === entry.borderBoxSize[0].inlineSize) {
+    // In webkit entry.borderBoxSize is array, in Firefox it's obiekt :)
+    const borderBoxSize = entry.borderBoxSize instanceof Array ?
+      entry.borderBoxSize[0]
+      : entry.borderBoxSize;
+
+    if (this.lastWidth === borderBoxSize.inlineSize) {
       return;
     }
 
-    const newInnerWidth = entry.borderBoxSize[0].inlineSize;
+    const newInnerWidth = borderBoxSize.inlineSize;
     const oldInnerWidth = this.table!._innerWidth; // Before I call recalcuate here is old table width.
 
     // Okey, if content is already overflowing that means user resized columns
