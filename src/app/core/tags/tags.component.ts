@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import IColumns from '../../../helpers/table/interfaces/columns';
-import IRow from '../../../helpers/table/interfaces/row';
+import IColumns from '../../helpers/table/interfaces/columns';
+import IRow from '../../helpers/table/interfaces/row';
 import { NbGlobalPhysicalPosition, NbToastrService, NbTrigger } from '@nebular/theme';
-import ITableDeleteEvent from '../../../helpers/table/interfaces/delete-event';
-import { TagService } from '../../services/tag.service';
-import TagAlreadyExistsError from '../../errors/tag-already-exists-error';
-import { ConfirmWaitingDialogService } from '../../../helpers/services/confirm-waiting-dialog.service';
+import ITableDeleteEvent from '../../helpers/table/interfaces/delete-event';
+import { TagService } from './tag.service';
+import TagAlreadyExistsError from './tag-already-exists-error';
+import { ConfirmWaitingDialogService } from '../../helpers/services/confirm-waiting-dialog.service';
 
 @Component({
   selector: 'app-tags',
