@@ -36,7 +36,7 @@ export class TagsComponent implements OnInit {
     selected: []
   }
 
-  @ViewChild("addTagInput") addTagInputRef: ElementRef<HTMLInputElement> | undefined;
+  @ViewChild("addTagInput") addTagInputRef?: ElementRef<HTMLInputElement>;
 
   addTagEnterKeyupHandler() {
     this.addingTagName != '' && this.addTag();
@@ -150,6 +150,6 @@ export class TagsComponent implements OnInit {
   }
 
   private toastr(status: string, title: string, message: string) {
-    this.toastrService.show(message, title, { status, position: NbGlobalPhysicalPosition.TOP_RIGHT, duration: 6000 })
+    this.toastrService.show(message, title, { status, position: NbGlobalPhysicalPosition.TOP_RIGHT, duration: 6000 });
   }
 }

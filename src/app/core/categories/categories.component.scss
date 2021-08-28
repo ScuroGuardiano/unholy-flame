@@ -1,0 +1,19 @@
+.add-category {
+  display: flex;
+  button {
+    margin-left: 0.5rem;
+    width: 80px;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.refresh-button {
+  margin-left: .5rem;
+}
+
+.delete-selected-btn {
+  margin-top: .5rem;
+}

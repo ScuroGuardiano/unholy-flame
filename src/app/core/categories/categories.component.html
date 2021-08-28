@@ -3,14 +3,56 @@
     Add category
   </nb-card-header>
   <nb-card-body class="add-category">
+    <nb-form-field>
+      <nb-icon nbPrefix icon="folder-outline" pack="eva"></nb-icon>
+      <input
+        #addCategoryInput
+        nbInput
+        status="primary"
+        name="category-name"
+        placeholder="Category name"
+        (keyup.enter)="addCategoryEnterKeyupHandler()"
+        [(ngModel)]="addingCategoryName"
+        [disabled]="addingInProgress"
+      >
+    </nb-form-field>
+    <button
+      nbButton
+      status="primary"
+      (click)="addCategory()"
+      [disabled]="addingCategoryName === '' || addingInProgress"
+      [nbSpinner]="addingInProgress"
+      nbSpinnerStatus="info">
+      <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+    </button>
   </nb-card-body>
 </nb-card>
 
-<nb-card>
+<nb-card [nbSpinner]="loadingCategories" nbSpinnerStatus="info" nbSpinnerSize="giant">
   <nb-card-header>
     Categories list
+    <button class="refresh-button" nbButton outline status="primary" size="small"
+      [nbSpinner]="loadingCategories" npSpinnerStatus="info" nbSpinnerSize="tiny"
+      nbTooltip="Refresh local cache by forcing data reload from firestore." nbTooltipStatus="info" nbTooltipIcon="info-outline" nbTooltipClass="tooltip"
+      (click)="readCategories(true)">
+      <nb-icon icon="refresh-outline"></nb-icon>
+    </button>
   </nb-card-header>
   <nb-card-body>
-    <app-table></app-table>
+    <app-table
+      [deletable]="true"
+      [columns]="categories.columns"
+      [rows]="categories.rows"
+      (delete)="deleteCategory($event)"
+      [selectable]="true"
+      [(selected)]="categories.selected">
+    </app-table>
+    <button
+      class="delete-selected-btn"
+      status="danger"
+      nbButton [disabled]="categories.selected.length === 0"
+      (click)="deleteSelected()">
+        DELETE SELECTED
+    </button>
   </nb-card-body>
 </nb-card>

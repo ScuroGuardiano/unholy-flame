@@ -45,7 +45,7 @@ export class TagService {
 
       const doesTagExists = existingTags.some(tag => tag.slug === tagToAdd.slug);
       if (doesTagExists) {
-        throw new TagAlreadyExistsError();
+        throw new TagAlreadyExistsError(tagName);
       }
       existingTags.push(tagToAdd);
       transaction.set(this.tagsDocRef, {
@@ -75,7 +75,8 @@ export class TagService {
     this.tags = await this.firestore.firestore.runTransaction(async transaction => {
       const existingTags = await this.getTagsWithinTransaction(transaction);
 
-      const notExistingTags = tagsToAdd.filter(tagToAdd => !existingTags.some(existingTag => existingTag.slug === tagToAdd.slug));
+      const notExistingTags = tagsToAdd
+        .filter(tagToAdd => !existingTags.some(existingTag => existingTag.slug === tagToAdd.slug));
       existingTags.push(...notExistingTags);
 
       transaction.set(this.tagsDocRef, {
@@ -109,7 +110,7 @@ export class TagService {
   }
 
   /**
-   * Will add tags array of tags to the database. If tag exists it will omit it
+   * Will delete tags from the database. If tag does not exists it will omit it
    * @returns how many tags were deleted
    */
   async deleteTags(slugs: string[]): Promise<number> {
@@ -119,7 +120,7 @@ export class TagService {
       const existingTags = await this.getTagsWithinTransaction(transaction);
 
       const tagsWithoutRemovedOnes = existingTags.filter(tag => !slugs.includes(tag.slug));
-      removed = this.tags.length - tagsWithoutRemovedOnes.length
+      removed = this.tags.length - tagsWithoutRemovedOnes.length;
 
       if (removed === 0) {
         return existingTags;
@@ -136,12 +137,11 @@ export class TagService {
     return removed;
   }
 
-
   private async getTagsWithinTransaction(transaction: firebase.default.firestore.Transaction): Promise<ITag[]> {
-
     const tagsDoc = await transaction.get(this.tagsDocRef);
     return (tagsDoc.data()?.tags ?? []) as ITag[];
   }
+
   /**
    * @returns result of loading, false - there's no tags document in firestore, true - loaded correctly
    */
@@ -171,6 +171,7 @@ export class TagService {
     this.tagsLoaded = true;
     return true;
   }
+
   private saveTagsToSessionStorage() {
     sessionStorage.setItem('tags', JSON.stringify(this.tags));
   }
