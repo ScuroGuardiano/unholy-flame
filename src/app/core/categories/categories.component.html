@@ -3,28 +3,37 @@
     Add category
   </nb-card-header>
   <nb-card-body class="add-category">
-    <nb-form-field>
-      <nb-icon nbPrefix icon="folder-outline" pack="eva"></nb-icon>
-      <input
-        #addCategoryInput
+    <form>
+      <nb-form-field>
+        <nb-icon nbPrefix icon="folder-outline" pack="eva"></nb-icon>
+        <input
+          #addCategoryInput
+          nbInput
+          status="primary"
+          name="category-name"
+          placeholder="Category name"
+          [(ngModel)]="addingCategoryName"
+          [disabled]="addingInProgress"
+        >
+      </nb-form-field>
+      <textarea
         nbInput
         status="primary"
-        name="category-name"
-        placeholder="Category name"
-        (keyup.enter)="addCategoryEnterKeyupHandler()"
-        [(ngModel)]="addingCategoryName"
-        [disabled]="addingInProgress"
-      >
-    </nb-form-field>
-    <button
-      nbButton
-      status="primary"
-      (click)="addCategory()"
-      [disabled]="addingCategoryName === '' || addingInProgress"
-      [nbSpinner]="addingInProgress"
-      nbSpinnerStatus="info">
-      <nb-icon icon="plus-outline" pack="eva"></nb-icon>
-    </button>
+        placeholder="Description (optional)"
+        name="category-description"
+        [(ngModel)]="addingCategoryDescription"
+        [disabled]="addingInProgress"></textarea>
+      <button
+        type="submit"
+        nbButton
+        status="primary"
+        (click)="addCategory()"
+        [disabled]="addingCategoryName === '' || addingInProgress"
+        [nbSpinner]="addingInProgress"
+        nbSpinnerStatus="info">
+        <nb-icon icon="plus-outline" pack="eva"></nb-icon>
+      </button>
+    </form>
   </nb-card-body>
 </nb-card>
 

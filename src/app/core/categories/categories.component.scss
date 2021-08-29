@@ -1,12 +1,16 @@
 .add-category {
-  display: flex;
+  display: block;
   button {
-    margin-left: 0.5rem;
+    margin-top: 0.5rem;
     width: 80px;
-
+    display: block;
     &:disabled {
       cursor: not-allowed;
     }
+  }
+  textarea {
+    width: 320px;
+    margin-top: .5rem;
   }
 }
 

@@ -8,6 +8,11 @@ export interface ICategoriesDoc {
   categories: ICategory[];
 }
 
+interface CategoryAddingObject {
+  name: string;
+  description?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,10 +39,11 @@ export class CategoriesService {
     return this.categories;
   }
 
-  async addCategory(categoryName: string) {
+  async addCategory({ name: categoryName, description: categoryDescription = '' }: CategoryAddingObject) {
     const categoryToAdd = {
       slug: slugify(categoryName, { lower: true }),
-      name: categoryName
+      name: categoryName,
+      description: categoryDescription
     };
 
     this.categories = await this.firestore.firestore.runTransaction(async transaction => {
@@ -62,11 +68,12 @@ export class CategoriesService {
    * Will add categories array to the database. If category exists it will omit it
    * @returns returns how many categories were added
    */
-  async addCategories(categoriesNames: string[]): Promise<number> {
-    const categoriesToAdd = categoriesNames.map<ICategory>(categoryName => {
+  async addCategories(categories: CategoryAddingObject[]): Promise<number> {
+    const categoriesToAdd = categories.map<ICategory>(addingCategory => {
       return {
-        name: categoryName,
-        slug: slugify(categoryName, { lower: true })
+        name: addingCategory.name,
+        slug: slugify(addingCategory.name, { lower: true }),
+        description: addingCategory.description ?? ''
       }
     });
 

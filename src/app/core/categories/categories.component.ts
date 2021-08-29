@@ -21,6 +21,7 @@ export class CategoriesComponent implements OnInit {
   ) { }
 
   addingCategoryName = '';
+  addingCategoryDescription = '';
   addingInProgress = false;
   loadingCategories = false;
   deletingInProgress = false;
@@ -30,7 +31,8 @@ export class CategoriesComponent implements OnInit {
   categories: { columns: IColumns, rows: IRow[], selected: IRow[] } = {
     columns: {
       name: "Display name",
-      slug: "Slug"
+      slug: "Slug",
+      description: "Description"
     },
     rows: [],
     selected: []
@@ -45,9 +47,10 @@ export class CategoriesComponent implements OnInit {
   async addCategory() {
     try {
       this.addingInProgress = true;
-      await this.categoriesService.addCategory(this.addingCategoryName);
+      await this.categoriesService.addCategory({ name: this.addingCategoryName, description: this.addingCategoryDescription });
       this.toastr("success", "Success!", "Category added!");
       this.addingCategoryName = '';
+      this.addingCategoryDescription = '';
       this.readCategories();
     }
     catch (err: any) {
