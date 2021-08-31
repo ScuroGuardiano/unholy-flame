@@ -52,7 +52,7 @@
   <ngx-datatable-column [width]="120" [canAutoResize]="false" [resizeable]="false" [sortable]="false" [draggable]="false">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       <button [disabled]="!deletable" nbButton status="danger" (click)="_delete(row, rowIndex)"><nb-icon icon="trash-2-outline"></nb-icon></button>
-      <button [disabled]="!editable" nbButton status="success"><nb-icon icon="edit-outline"></nb-icon></button>
+      <button [disabled]="!editable" nbButton status="success" (click)="_edit(row, rowIndex)"><nb-icon icon="edit-outline"></nb-icon></button>
     </ng-template>
   </ngx-datatable-column>
 </ngx-datatable>

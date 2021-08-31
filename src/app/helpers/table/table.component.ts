@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, ViewEncapsulation, EventEmitter, View
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import IColumns from './interfaces/columns';
 import ITableDeleteEvent from './interfaces/delete-event';
+import ITableEditEvent from './interfaces/edit-event';
 import IRow from './interfaces/row';
 
 @Component({
@@ -27,6 +28,7 @@ export class TableComponent implements OnInit {
 
   // #region Outputs
   @Output() delete = new EventEmitter<ITableDeleteEvent>();
+  @Output() edit = new EventEmitter<ITableEditEvent>();
   // #endregion
 
   // #region Two-way data
@@ -69,6 +71,10 @@ export class TableComponent implements OnInit {
 
   _delete(row: IRow, rowIndex: number) {
     this.delete.emit({ row, rowIndex })
+  }
+
+  _edit(row: IRow, rowIndex: number) {
+    this.edit.emit({ row, rowIndex });
   }
 
   /**
