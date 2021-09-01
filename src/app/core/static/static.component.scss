@@ -1,0 +1,41 @@
+nb-card {
+  height: 100%;
+}
+nb-card-header {
+  display: flex;
+  .buttons {
+    margin-left: 2rem;
+    button:not(:first-child) {
+      margin-left: .5rem;
+    }
+  }
+}
+nb-card-body {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.card-col {
+  flex: 1;
+  margin: 0 .5rem;
+  min-width: 560px;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+}
+textarea {
+  resize: vertical;
+  height: 100%;
+}
+.preview-wrapper {
+  height: 100%;
+  position: relative;
+}
+.preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+}

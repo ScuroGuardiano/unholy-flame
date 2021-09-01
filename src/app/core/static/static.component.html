@@ -1,0 +1,30 @@
+<div #sizeMeter class="size-meter"></div>
+<nb-card [nbSpinner]="reading" nbSpinnerStatus="primary" nbSpinnerSize="giant">
+  <nb-card-header>
+    <h4>{{ name }}</h4>
+    <div class="buttons">
+      <button
+        nbButton status="success" [disabled]="!modified" (click)="save()"
+        [nbSpinner]="saving" nbSpinnerSize="giant" nbSpinnerStatus="primary"
+      >Save</button>
+      <button nbButton status="warning" *ngIf="modified" (click)="undoChanges()">Undo changes</button>
+      <button nbButton status="danger" *ngIf="canGoBack" (click)="fuckGoBack()">Fuck, go back</button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="card-col">
+      <h3>Edit</h3>
+      <textarea
+        nbInput
+        fullWidth
+        [(ngModel)]="modifiedContent"
+        placeholder="FUCKING TEXT"></textarea>
+    </div>
+    <div class="card-col">
+      <h3>Preview</h3>
+      <div class="preview-wrapper">
+        <div class="preview" [innerHTML]="modifiedContent | marked"></div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

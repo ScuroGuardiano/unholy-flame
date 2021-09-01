@@ -59,7 +59,11 @@ const Nebula = [
     IsHoveredDirective,
     ResizeObserverDirective,
     CategoriesComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    StaticComponent,
+    PrivacyComponent,
+    AboutComponent,
+    MarkedPipe,
   ],
   imports: [
     BrowserModule,
