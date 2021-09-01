@@ -22,6 +22,11 @@ import { ConfirmWaitingDialogComponent } from './helpers/confirm-waiting-dialog/
 import { IsHoveredDirective } from './directives/is-hovered.directive';
 import { ResizeObserverDirective } from './directives/resize-observer.directive';
 import { CategoriesComponent } from './core/categories/categories.component';
+import { EditCategoryComponent } from './core/categories/edit-category/edit-category.component';
+import { StaticComponent } from './core/static/static.component';
+import { PrivacyComponent } from './core/privacy/privacy.component';
+import { AboutComponent } from './core/about/about.component';
+import { MarkedPipe } from './helpers/pipes/marked.pipe';
 
 const Nebula = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -54,6 +59,7 @@ const Nebula = [
     IsHoveredDirective,
     ResizeObserverDirective,
     CategoriesComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,

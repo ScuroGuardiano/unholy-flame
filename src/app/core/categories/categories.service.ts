@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import slugify from 'slugify';
 import ICategory from './category';
 import CategoryAlreadyExistsError from './category-already-exists-error';
+import CategoryNotFoundError from './category-not-found-error';
 
 export interface ICategoriesDoc {
   categories: ICategory[];
@@ -95,6 +96,31 @@ export class CategoriesService {
 
     this.saveCategoriesToSessionStorage();
     return added;
+  }
+
+  async updateCategory(updatedCategory: ICategory) {
+    if (updatedCategory.slug !== updatedCategory.name.toLowerCase()) {
+      throw new Error("Category update error: Category slug and name does not match!");
+    }
+
+    this.categories = await this.firestore.firestore.runTransaction(async transaction => {
+      const existingCategories = await this.getCategoriesWithinTransaction(transaction);
+
+      const categoryToUpdateIndex = existingCategories.findIndex(c => c.slug === updatedCategory.slug);
+      if (categoryToUpdateIndex === -1) {
+        throw new CategoryNotFoundError(updatedCategory.slug);
+      }
+
+      existingCategories[categoryToUpdateIndex] = updatedCategory;
+
+      transaction.set(this.categoriesDocRef, {
+        categories: existingCategories
+      });
+
+      return existingCategories;
+    });
+
+    this.saveCategoriesToSessionStorage();
   }
 
   async deleteCategory(slug: string) {

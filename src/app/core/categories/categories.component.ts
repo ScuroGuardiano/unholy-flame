@@ -1,11 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NbGlobalPhysicalPosition, NbToastrService, NbTrigger } from '@nebular/theme';
 import { ConfirmWaitingDialogService } from 'src/app/helpers/services/confirm-waiting-dialog.service';
+import { EditWaitingDialogService } from 'src/app/helpers/services/edit-waiting-dialog.service';
 import IColumns from 'src/app/helpers/table/interfaces/columns';
 import ITableDeleteEvent from 'src/app/helpers/table/interfaces/delete-event';
+import ITableEditEvent from 'src/app/helpers/table/interfaces/edit-event';
 import IRow from 'src/app/helpers/table/interfaces/row';
 import { CategoriesService } from './categories.service';
+import ICategory from './category';
 import CategoryAlreadyExistsError from './category-already-exists-error';
+import CategoryNotFoundError from './category-not-found-error';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
 
 @Component({
   selector: 'app-categories',
@@ -17,7 +22,8 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private categoriesService: CategoriesService,
     private toastrService: NbToastrService,
-    private dialogService: ConfirmWaitingDialogService
+    private confirmDialogService: ConfirmWaitingDialogService,
+    private editDialogService: EditWaitingDialogService
   ) { }
 
   addingCategoryName = '';
@@ -87,7 +93,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   confirmDeletingCategory(categoryName: string) {
-    return this.dialogService.open({
+    return this.confirmDialogService.open({
       header: `Deleting category ${categoryName}`,
       text: `Are you sure you want to delete category ${categoryName}? This is irreversible! Posts that are using this category will have dead reference to it.`,
       confirmStatus: "danger",
@@ -125,7 +131,7 @@ export class CategoriesComponent implements OnInit {
     const thisThese = categoriesNoun === 'category' ? 'this' : 'these';
     const categoriesAmount = this.categories.selected.length;
 
-    return this.dialogService.open({
+    return this.confirmDialogService.open({
       header: `Deleting ${categoriesAmount} ${categoriesNoun}`,
       text: `Are you sure you want to delete ${categoriesAmount} ${categoriesNoun}? This is irreversible! Posts that are using ${thisThese} ${categoriesNoun} will have dead reference to it`,
       confirmStatus: "danger",
@@ -133,6 +139,30 @@ export class CategoriesComponent implements OnInit {
       abortStatus: "info",
       abortCaption: "No, don't delete"
     }, { autoFocus: false })
+  }
+
+  async editCategory(editEvent: ITableEditEvent) {
+    const _update = async (modifiedCategory: ICategory) => {
+      try {
+        await this.categoriesService.updateCategory(modifiedCategory);
+        this.readCategories();
+        this.toastr("success", "Success", `Category ${modifiedCategory.name} was updated!`);
+      }
+      catch (err) {
+        if (err instanceof CategoryNotFoundError) {
+          return this.toastr("danger", "Error", err.message);
+        }
+        this.toastr("danger", "Error", `${err.code ?? 'unknown'}. Check console for full error`);
+        console.error(err);
+      }
+    }
+
+    const dialogRef = this.editDialogService.open(EditCategoryComponent, { category: editEvent.row as ICategory });
+    dialogRef.onSave = async modifiedCategory => {
+      dialogRef.startWaiting();
+      await _update(modifiedCategory);
+      dialogRef.finishWaiting();
+    }
   }
 
   async readCategories(forceReloadFromDatabase = false) {

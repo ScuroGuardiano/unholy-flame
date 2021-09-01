@@ -1,0 +1,21 @@
+nb-card {
+  width: 700px;
+}
+input {
+  margin-bottom: .5rem;
+  margin-top: .2rem;
+}
+.notice {
+  font-style: italic;
+  font-weight: bolder;
+  color: orange;
+}
+textarea {
+  resize: vertical;
+}
+button {
+  margin-top: .5rem;
+  &:not(:first-of-type) {
+    margin-left: .5rem;
+  }
+}

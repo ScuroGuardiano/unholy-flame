@@ -1,0 +1,68 @@
+<nb-card [nbSpinner]="processing" nbSpinnerStatus="primary" nbSpinnerSize="giant">
+  <ng-container *ngIf="category then showForm else showError">
+  </ng-container>
+</nb-card>
+
+<ng-template #showForm>
+  <nb-card-header>
+    <h2>Editing category &apos;{{category!.name}}&apos;...</h2>
+  </nb-card-header>
+  <nb-card-body>
+    <form>
+      <label for="category-slug">Slug:</label>
+      <input
+        nbInput
+        fullWidth
+        status="primary"
+        type="text" [(ngModel)]="modifiedCategory!.slug"
+        name="category-slug"
+        id="category-slug"
+        disabled>
+
+      <label for="category-name">Name:</label><br>
+      <span class="notice">You can change only letter from uppercase to lowercase. Eg. anguLAr -> Angular</span>
+      <input
+        nbInput
+        fullWidth
+        [status]="nameValid ? 'success' : 'danger'"
+        type="text" [(ngModel)]="modifiedCategory!.name"
+        name="category-name"
+        id="category-name">
+
+      <label for="category-description">Description:</label>
+      <textarea
+        nbInput
+        fullWidth
+        status="info"
+        type="text" [(ngModel)]="modifiedCategory!.description"
+        name="category-description"
+        id="category-description"></textarea>
+
+        <button
+          nbButton
+          outline
+          status="success"
+          [disabled]="!formValid"
+          type="submit"
+          (click)="onSave()">
+          <nb-icon icon="save" pack="eva"></nb-icon>Save
+        </button>
+        <button
+          nbButton
+          outline
+          status="warning"
+          (click)="onAbort()">
+          Abort
+        </button>
+    </form>
+  </nb-card-body>
+</ng-template>
+
+<ng-template #showError>
+    <nb-card-header>
+      <h1>Error</h1>
+    </nb-card-header>
+    <nb-card-body>
+      <h2>Set category input on EditCategoryComponent</h2>
+    </nb-card-body>
+</ng-template>

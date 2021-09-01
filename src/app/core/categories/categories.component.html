@@ -50,9 +50,11 @@
   <nb-card-body>
     <app-table
       [deletable]="true"
+      [editable]="true"
       [columns]="categories.columns"
       [rows]="categories.rows"
       (delete)="deleteCategory($event)"
+      (edit)="editCategory($event)"
       [selectable]="true"
       [(selected)]="categories.selected">
     </app-table>
