@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit, AfterContentChecked {
       this.cardStatus = "info";
       const login = await this.auth.signInWithEmailAndPassword(this.email, this.password);
       this.cardStatus = "success";
-      console.dir(login);
     }
     catch (err) {
       if ('code' in err) {

@@ -1,0 +1,114 @@
+.filelist {
+  margin-top: .5rem;
+  ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    gap: .5rem;
+
+    li {
+      min-width: 320px;
+      width: 320px;
+      height: 180px;
+      border: solid 2px #a6c1ff80;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .uploaded {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, .8);
+        color: limegreen;
+        font-family: Consolas, 'Courier New', Courier, monospace;
+        font-size: 1.2rem;
+        font-weight: bolder;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        nb-icon {
+          font-size: 5rem;
+        }
+      }
+
+
+      .filename, .fileinfo {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        font-family: Consolas 'Ubuntu Mono' 'Courier New', Courier, monospace;
+        background-color: rgba(0, 0, 0, .4);
+        transition: background-color .6s;
+        padding: .3rem;
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        .filename, .fileinfo {
+          background-color: rgba(0, 0, 0, 0.8);
+        }
+      }
+
+      .filename {
+        top: 0;
+        span {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          display: block;
+          width: calc(100% - 1.8rem);
+        }
+      }
+      .fileinfo {
+        bottom: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: block;
+      }
+
+      .delete-file {
+        border: none;
+        background: transparent;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        transition: color .6s;
+        color: #aaa;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+
+        nb-icon {
+          font-size: 1.8rem;
+        }
+
+        &:hover {
+          color: #eee;
+        }
+      }
+    }
+  }
+
+  nb-card-footer {
+    .upload-progress {
+      margin-top: .5rem;
+    }
+    nb-progress-bar {
+      margin-top: .2rem;
+      margin-bottom: .2rem;
+    }
+    button:not(button:first-of-type) {
+      margin-left: .5rem;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+<nb-card @uploadEnterLeave class="filelist" *ngIf="files.length > 0">
+  <nb-card-body>
+    <ul [@fileListAnimation]="files.length">
+      <li
+        *ngFor="let file of files, let index = index"
+        [nbSpinner]="index === currentFileIdx && !file.uploaded"
+        nbSpinnerSize="giant"
+        nbSpinnerStatus="primary"
+        >
+        <div class="uploaded" *ngIf="file.uploaded">
+          <nb-icon icon="checkmark-circle-outline"></nb-icon>
+        </div>
+        <div class="filename"><span [title]="file.name">{{ file.name }}</span></div>
+        <div class="fileinfo">
+          <span class="filesize" [title]="file.size + ' bytes'">{{ file.size | filesize }}</span>
+          <span class="filetype" [title]="file.type"> {{ file.type }}</span>
+        </div>
+        <button *ngIf="!blockFilelistEdit" class="delete-file" (click)="deleteFileByArrIndex(index)">
+          <nb-icon icon='close-circle-outline' pack='eva'></nb-icon>
+        </button>
+        <img [src]="file | fileToUrl">
+      </li>
+    </ul>
+  </nb-card-body>
+  <nb-card-footer>
+    <button *ngIf="uploadButtonVisible" nbButton status="primary" [disabled]="files.length === 0" (click)="upload()">
+      <nb-icon icon="upload-outline"></nb-icon> Upload {{ allFilesSize() | filesize }}
+    </button>
+    <button *ngIf="pauseButtonVisible" nbButton status="warning" (click)="pause()">
+      <nb-icon icon="pause-circle-outline"></nb-icon> Pause
+    </button>
+    <button *ngIf="resumeButtonVisible" nbButton status="success" (click)="resume()">
+      <nb-icon icon="play-circle-outline"></nb-icon> Resume
+    </button>
+    <button *ngIf="retryButtonVisible" nbButton status="info" (click)="retry()">
+      <nb-icon icon="refresh-outline"></nb-icon> Retry
+    </button>
+    <button *ngIf="cancelButtonVisible" nbButton status="danger" (click)="cancel()">
+      <nb-icon icon="close-outline"></nb-icon> Cancel
+    </button>
+    <div class="upload-progress" *ngIf="true">
+      <span *ngIf="currentFileUploadedBytes">{{ currentFileUploadedBytes | filesize }} / {{ currentUploadingFileSize | filesize }}</span>
+      <nb-progress-bar [status]="progressBarsStatus" [value]="currentFilePercentage">
+        {{ currentFilePercentage / 100 | percent: '2.2-2' }}
+      </nb-progress-bar>
+      <span *ngIf="totalUploadedBytes">{{ totalUploadedBytes | filesize }} / {{ allFilesSize() | filesize }}</span>
+      <nb-progress-bar [status]="progressBarsStatus" [value]="totalPercentage">
+        {{ totalPercentage / 100 | percent: '2.2-2' }}
+      </nb-progress-bar>
+    </div>
+  </nb-card-footer>
+</nb-card>

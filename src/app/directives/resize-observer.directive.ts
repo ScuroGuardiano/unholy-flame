@@ -26,7 +26,7 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
 
       observer.observe(this.hostRef.nativeElement);
       return () => {
-        observer.unobserve
+        observer.unobserve(this.hostRef.nativeElement);
       };
     })
 

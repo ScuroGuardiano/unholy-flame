@@ -16,3 +16,20 @@ button:disabled {
     height: 2em !important;
   }
 }
+
+.sg-custom {
+
+  .notice {
+    font-style: italic;
+    font-weight: bolder;
+    color: orange;
+  }
+
+  a {
+    color: rgb(30, 196, 196);
+    &:hover {
+      color: cyan;
+    }
+  }
+
+}
