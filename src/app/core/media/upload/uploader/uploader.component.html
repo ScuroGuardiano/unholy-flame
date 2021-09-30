@@ -39,11 +39,14 @@
       <nb-icon icon="close-outline"></nb-icon> Cancel
     </button>
     <div class="upload-progress" *ngIf="true">
+      <p class="uploading-info" *ngIf="currentFileIdx !== null">
+        Uploading <ng-container *ngIf="isUploadingThumbnail">thumbnail for the</ng-container> file {{ files[currentFileIdx].name }}...
+      </p>
       <span *ngIf="currentFileUploadedBytes">{{ currentFileUploadedBytes | filesize }} / {{ currentUploadingFileSize | filesize }}</span>
       <nb-progress-bar [status]="progressBarsStatus" [value]="currentFilePercentage">
         {{ currentFilePercentage / 100 | percent: '2.2-2' }}
       </nb-progress-bar>
-      <span *ngIf="totalUploadedBytes">{{ totalUploadedBytes | filesize }} / {{ allFilesSize() | filesize }}</span>
+      <span *ngIf="totalUploadedBytes">{{ totalUploadedBytes | filesize }} / {{ totalUploadSize  | filesize }}</span>
       <nb-progress-bar [status]="progressBarsStatus" [value]="totalPercentage">
         {{ totalPercentage / 100 | percent: '2.2-2' }}
       </nb-progress-bar>

@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UnholyToastrService } from 'src/app/helpers/services/unholy-toastr.service';
 import { FirebaseStorageService } from '../../firebase-storage/firebase-storage.service';
 import MultipleFilesUploadTask, { IUploadStatus, UPLOAD_STATE } from '../../firebase-storage/multiple-files-upload-task';
+import { MediaUploadHelperService } from '../media-upload-helper/media-upload-helper.service';
 import fileListAnimation from './file-list.animation';
 import uploadEnterLeaveAnimation from './upload-enter-leave.animation';
 
@@ -19,7 +20,11 @@ interface FileExtended extends File {
 })
 export class UploaderComponent implements OnInit {
 
-  constructor(private storage: FirebaseStorageService, private toastrService: UnholyToastrService) { }
+  constructor(
+    private storage: FirebaseStorageService,
+    private toastrService: UnholyToastrService,
+    private mediaUploadHelper: MediaUploadHelperService
+    ) { }
 
   @HostBinding("@uploadEnterLeave") uploadEnterLeaveAnimation() {};
 
@@ -48,7 +53,17 @@ export class UploaderComponent implements OnInit {
   //#region View get helpers
 
   get currentFileIdx() {
-    return this.lastUploadProgress?.currentFileIdx;
+    if (this.lastUploadProgress?.currentFile) {
+      return this.mediaUploadHelper.getOriginalFileIdx(this.lastUploadProgress?.currentFile);
+    }
+    return null;
+  }
+
+  get isUploadingThumbnail() {
+    if (this.lastUploadProgress?.currentFile) {
+      return this.mediaUploadHelper.isThumbnail(this.lastUploadProgress.currentFile);
+    }
+    return false;
   }
 
   get currentFilePercentage() {
@@ -61,6 +76,10 @@ export class UploaderComponent implements OnInit {
 
   get totalUploadedBytes() {
     return this.lastUploadProgress?.uploadedBytes || 0;
+  }
+
+  get totalUploadSize() {
+    return this.uploadingTask?.getTotalBytesToUpload() || 0;
   }
 
   get currentFileUploadedBytes() {
@@ -124,14 +143,14 @@ export class UploaderComponent implements OnInit {
 
   async upload() {
     if (this.files.length > 0) {
-      this.uploadingTask = this.storage.createMultipleFilesUploadTask(this.files);
+      this.uploadingTask = await this.mediaUploadHelper.uploadFilesWithThumbnails(this.files);
       const uploadStatusSubscription = this.uploadingTask.uploadStatus.subscribe(
-        status => { this.lastUploadProgress = status; console.log("Oh my fuck") },
+        status => this.lastUploadProgress = status,
         error => this.handleError(error),
         () => this.complete()
       );
 
-      const fileSubscription = this.uploadingTask.fileUploaded.subscribe(({ fileIdx }) => this.files[fileIdx].uploaded = true);
+      const fileSubscription = this.uploadingTask.fileUploaded.subscribe(this.onFileUploaded.bind(this));
       this.unsubscribeUploadObservables = () => {
         fileSubscription.unsubscribe();
         uploadStatusSubscription.unsubscribe();
@@ -141,6 +160,15 @@ export class UploaderComponent implements OnInit {
 
       this.uploadingTask.start(false);
     }
+  }
+
+  onFileUploaded({ file }: { file: File }) {
+    if (this.isUploadingThumbnail) {
+      return;
+    }
+    const realFileIdx = this.mediaUploadHelper.getOriginalFileIdx(file);
+    console.log(realFileIdx);
+    this.files[realFileIdx].uploaded = true;
   }
 
   handleError(err: any) {

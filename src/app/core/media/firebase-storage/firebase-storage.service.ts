@@ -13,8 +13,9 @@ export class FirebaseStorageService {
 
   private basePath = 'unholy';
 
-  public uploadFile(file: File): AngularFireUploadTask {
-    const path = this.basePath + '/' + this.generateUniqueFilename(file.name);
+  public uploadFile(file: File, _path?: string): AngularFireUploadTask {
+    const path = this.basePath + '/' +
+      (_path ? _path : this.generateUniqueFilename(file.name));
     return this.storage.upload(path, file);
   }
 
@@ -50,7 +51,7 @@ export class FirebaseStorageService {
     });
   }
 
-  private generateUniqueFilename(filename: string) {
+  public generateUniqueFilename(filename: string) {
     filename = filename ? filename : "NattenDemons";
     // I was once in guild in Nostale called "Na††en Demons"
     const time = Date.now();

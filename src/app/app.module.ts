@@ -34,7 +34,8 @@ import { FilesizePipe } from './helpers/pipes/filesize.pipe';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { UploaderComponent } from './core/media/upload/uploader/uploader.component';
 import { UploadComponent } from './core/media/upload/upload/upload.component';
-import { BrowseMediaComponent } from './core/media/browse-media/browse-media.component'
+import { BrowseMediaComponent } from './core/media/browse-media/browse-media.component';
+import { MediaElementComponent } from './core/media/browse-media/media-element/media-element.component'
 
 const Nebula = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -80,6 +81,7 @@ const Nebula = [
     UploaderComponent,
     UploadComponent,
     BrowseMediaComponent,
+    MediaElementComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+<div *ngIf="file" class="file">
+  <div class="thumbnail">
+    <img *ngIf="file.thumbnailAbsoluteURL; else noThumbnail" [src]="file.thumbnailAbsoluteURL">
+    <ng-template #noThumbnail><p class="thumbnail-not-exist">Thumbnail doesn't exist</p></ng-template>
+  </div>
+  <div class="metadata">
+    <p class="name" [title]="file.metadata.name">{{ file.metadata.name }}</p>
+    <p>
+      <span class="type">{{ file.metadata.contentType }}</span> |
+      <span class="size">{{ file.metadata.size | filesize }}</span><br>
+      <a target="_blank" [href]="file.fullAbsoluteURL" class="full-file-path">View file</a> |
+      <a href="#" (click)="deleteFile($event, file)" class="delete-file">Delete file</a>
+    </p>
+  </div>
+</div>

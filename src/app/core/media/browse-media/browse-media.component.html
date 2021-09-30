@@ -1,1 +1,13 @@
-<p>browse-media works!</p>
+<nb-card [nbSpinner]="loading" nbSpinnerSize="giant" nbSpinnerStatus="info" nbSpinnerMessage="Loading...">
+  <nb-card-header>
+    Media gallery
+  </nb-card-header>
+  <nb-card-body>
+    <ul>
+      <li *ngFor="let file of files">
+        <app-media-element (deleted)="fileDeleted($event)" [file]="file"></app-media-element>
+      </li>
+    </ul>
+  </nb-card-body>
+</nb-card>
+

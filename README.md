@@ -10,6 +10,7 @@ The concept is to use only Spark plan without any Cloud Functions or something l
 * [AngularFire](https://github.com/angular/angularfire) for Angular Firebase services
 * [slugify](https://github.com/simov/slugify) to generate nice slugs from titles
 * [sass](https://sass-lang.com/) for styling
+* [compressorjs](https://fengyuanchen.github.io/compressorjs/) for image optimization
 
 ### How to run this
 1. Paste your firebase config into `src/environments/environment.ts`

@@ -1,0 +1,35 @@
+.file {
+  --thumb-size: 256px;
+
+  .thumbnail {
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    background-color: rgba(0, 0, 0, .4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .thumbnail-not-exist {
+      text-align: center;
+      font-weight: bolder;
+      font-style: italic;
+    }
+  }
+  .metadata {
+    margin-top: .2rem;
+    width: var(--thumb-size);
+    * {
+      font-family: Consolas, 'Courier New', Courier, monospace;
+    }
+    .name {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    p {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+  }
+}

@@ -110,5 +110,8 @@
     button:not(button:first-of-type) {
       margin-left: .5rem;
     }
+    .uploading-info {
+      text-align: center;
+    }
   }
 }

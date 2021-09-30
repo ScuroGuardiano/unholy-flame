@@ -1,5 +1,6 @@
 import { AngularFireUploadTask } from "@angular/fire/storage";
 import { Subject } from "rxjs";
+import { FileForceFilename } from "./file-force-filename";
 import { FirebaseStorageService } from "./firebase-storage.service";
 
 export enum UPLOAD_STATE {
@@ -30,7 +31,7 @@ export interface IUploadStatus {
  * It relies on FirebaseStorageService.
  */
 export default class MultipleFilesUploadTask {
-  constructor(private files: File[], private storageService: FirebaseStorageService) {}
+  constructor(private files: FileForceFilename[], private storageService: FirebaseStorageService) {}
 
   private currentTask?: AngularFireUploadTask;
   private state = UPLOAD_STATE.NOT_STARTED;
@@ -127,6 +128,10 @@ export default class MultipleFilesUploadTask {
     return false;
   }
 
+  getTotalBytesToUpload() {
+    return this.files.reduce((acc, file) => acc + file.size, 0);
+  }
+
   /**
    * Retries failed task. Takes effect only on errored upload task.
    *
@@ -155,7 +160,7 @@ export default class MultipleFilesUploadTask {
           this.lastPercentage = 0;
 
           this.currentFileIdx = fileIdx;
-          this.currentTask = this.storageService.uploadFile(file);
+          this.currentTask = this.storageService.uploadFile(file, file.forcedStorageFilename);
           this.currentTask.percentageChanges().subscribe(percentage => this.handlePercentageChange(percentage || 0, file, fileIdx))
 
           await this.currentTask;
